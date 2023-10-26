@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Base styles for larger screens (e.g., desktops) */
+        #typing-text {
+            font-size: 60px;
+             text-align: left;
+        
+            background: linear-gradient(45deg, #ff9900, #ffcc00, #ff9900);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'YourFontFamily', sans-serif;
+            font-weight: bold;
+        }
+
+        /* Media query for tablets and smaller screens */
+        @media screen and (max-width: 768px) {
+            #typing-text {
+                font-size: 30px; /* Adjust the font size for smaller screens */
+            }
+        }
+
+        /* Media query for screens with a width less than 600px */
+        @media screen and (max-width: 600px) {
+            #typing-text {
+                font-size: 35px; /* Font size for screens less than 600px wide */
+                color: blue;    /* Text color set to blue */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="typing-text"></div>
+    <script>
+        const textElement = document.getElementById("typing-text");
+        const phrases = ["Tech Enthusiast","Wordpress Developer", "Wix Developer","Email Marketer"];
+        let currentPhraseIndex = 0;
+        let currentCharacterIndex = 0;
+        let isErasing = false;
+
+        function typeText() {
+            const currentPhrase = phrases[currentPhraseIndex];
+            const currentCharacter = currentPhrase[currentCharacterIndex];
+
+            if (!isErasing) {
+                if (currentCharacter !== undefined) {
+                    textElement.textContent += currentCharacter;
+                    currentCharacterIndex++;
+                } else {
+                    isErasing = true;
+                    setTimeout(eraseText, 1000); // Pause before erasing
+                }
+            } else {
+                if (textElement.textContent.length > 0) {
+                    textElement.textContent = textElement.textContent.substring(0, textElement.textContent.length - 1);
+                } else {
+                    isErasing = false;
+                    currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+                    currentCharacterIndex = 0;
+                }
+            }
+        }
+
+        // Start the typing animation
+        setInterval(typeText, 100); // Adjust the typing speed (in milliseconds) as needed
+    </script>
+</body>
+</html>
